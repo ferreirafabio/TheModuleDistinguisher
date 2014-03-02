@@ -34,6 +34,17 @@ public class DiffModuleChanges {
 	private String sonderstand = " ";
 	private Map<String, String> modulesChanged = new HashMap<String, String>();
 
+	/**
+	 * Creates a new DiffModuleChanges with both file contents as sequential
+	 * strings. basis and sonderstand contain the extracted names of those two
+	 * files. All modules which have experienced changes are listed in
+	 * modulesChanged.
+	 * 
+	 * @param path1
+	 *            Path to first file in ANSI format
+	 * @param path2
+	 *            Path to second file in ANSI format.
+	 */
 	public DiffModuleChanges(String path1, String path2) {
 		this.file1 = getFileContent(path1);
 		this.file2 = getFileContent(path2);
@@ -43,14 +54,6 @@ public class DiffModuleChanges {
 		Map<String, String> modules1 = getModules(this.file1);
 		Map<String, String> modules2 = getModules(this.file2);
 		this.modulesChanged = compareModules(modules1, modules2);
-	}
-
-	public void setFile1(String file1) {
-		this.file1 = file1;
-	}
-
-	public void setFile2(String file2) {
-		this.file2 = file2;
 	}
 
 	public String getFile1() {
@@ -73,9 +76,16 @@ public class DiffModuleChanges {
 		return this.modulesChanged;
 	}
 
+	/**
+	 * Reads the file content and saves it as a sequential arrangement.
+	 * 
+	 * @param path
+	 *            Path for reading the file.
+	 * @return File content as sequential string.
+	 */
 	public String getFileContent(String path) {
 
-		String everything = "none";
+		String fileContent = "none";
 
 		BufferedReader br = null;
 		try {
@@ -93,7 +103,7 @@ public class DiffModuleChanges {
 				sb.append('\n');
 				line = br.readLine();
 			}
-			everything = sb.toString();
+			fileContent = sb.toString();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -105,10 +115,17 @@ public class DiffModuleChanges {
 				e.printStackTrace();
 			}
 		}
-
-		return everything;
+		return fileContent;
 	}
 
+	/**
+	 * Extracts the PK name from a string, containing sequential arranged module
+	 * information.
+	 * 
+	 * @param file
+	 *            String containing module information.
+	 * @return the PK name as a string.
+	 */
 	public String getPKName(String file) {
 
 		String pkName = new String("");
@@ -124,9 +141,20 @@ public class DiffModuleChanges {
 		return pkName;
 	}
 
+	/**
+	 * Extracts all the modules of a String, containing sequential arranged
+	 * module information. The row-wise extraction involves the module name and
+	 * its version number.
+	 * 
+	 * @param file
+	 *            String containing module information.
+	 * @return a Map(both key and value are type of String) containing all the
+	 *         modules, the module name representing the Maps' key and the
+	 *         version number representing the value.
+	 */
 	public Map<String, String> getModules(String file) {
 
-		Map<String, String> table = new HashMap<String, String>();
+		Map<String, String> moduleMap = new HashMap<String, String>();
 
 		java.util.regex.Pattern p = java.util.regex.Pattern
 		// .compile("\\s%(\\w+)\\s+(\\w+\\.[0-9]+)");
@@ -134,44 +162,59 @@ public class DiffModuleChanges {
 
 		Matcher m = p.matcher(file);
 		while (m.find()) {
-			table.put(m.group(1), m.group(2) + "." + m.group(3));
+			moduleMap.put(m.group(1), m.group(2) + "." + m.group(3));
 		}
 
-		return table;
+		return moduleMap;
 	}
 
+	/**
+	 * Compares two modules and detects differences. If there is a difference
+	 * between two equal modules (that is, module name), the greater version
+	 * number of the comparative modules is added to a new, final map, then
+	 * containing module name and its version number. A module which is enlisted
+	 * in one but not both files is also defined as a change and will be added
+	 * to the returned map.
+	 * 
+	 * @param modules1
+	 *            First map consisting of modules name and version numbers.
+	 * @param modules2
+	 *            Second map consisting of modules name and version numbers.
+	 * @return Map containing all modules which have previously been determined
+	 *         being different. Each entry consisting of module name and (the
+	 *         greater) version number.
+	 */
 	public Map<String, String> compareModules(Map<String, String> modules1,
 			Map<String, String> modules2) {
 
-		//changes first module
+		// changes first module
 		Set<Entry<String, String>> changedEntries1 = new HashSet<Entry<String, String>>(
 				modules1.entrySet());
-		//-
+
 		changedEntries1.removeAll(modules2.entrySet());
 
 		Set<Entry<String, String>> changedEntries2 = new HashSet<Entry<String, String>>(
 				modules2.entrySet());
+
+		// changes second module
 		changedEntries2.removeAll(modules1.entrySet());
 
 		changedEntries1.addAll(changedEntries2);
 
-		
 		Map<String, String> modulesChangedMap = new HashMap<String, String>();
 
-
-		
 		for (Entry<String, String> entry : changedEntries1) {
-			if(! (modulesChangedMap.containsKey(entry.getKey())) ){
+			if (!(modulesChangedMap.containsKey(entry.getKey()))) {
 				modulesChangedMap.put(entry.getKey(), entry.getValue());
 			} else {
 				String value1 = modulesChangedMap.get(entry.getKey());
-				String value2 = entry.getValue();		
-				if( value1.compareTo(value2) < 0 ) {
+				String value2 = entry.getValue();
+				if (value1.compareTo(value2) < 0) {
 					modulesChangedMap.put(entry.getKey(), value2);
 				}
 			}
 		}
-		
+
 		return modulesChangedMap;
 	}
 }
