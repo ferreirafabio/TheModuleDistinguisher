@@ -13,7 +13,5 @@
  
  <h1>To be done</h1>
  <ul TYPE="CIRCLE">
- <li>entire Javadoc</li>
- <li>JUnit tests</li>
- <li>Usage of args to get filepaths, as no MATLAB GUI has been implented yet</li>
+ <li>JUnit</li>
  </ul>
