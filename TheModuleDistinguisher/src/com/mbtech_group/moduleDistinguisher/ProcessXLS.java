@@ -249,11 +249,19 @@ public class ProcessXLS {
 	}
 
 	/**
+	 * Modules which are not listed in the sheet but listed in one and not the
+	 * other file will be added to the existing modules.
 	 * 
 	 * @param modulesChanged
+	 *            The modules which have been tagged to contain differences in
+	 *            key or value. Modules listed in one but not the other file
+	 *            will also be treated as different.
 	 * @param modules1
+	 *            The module map of the first file containing key and value.
 	 * @param modules2
-	 * @return
+	 *            The module map of the second file containing key and value.
+	 * @return Returns true if complementary modules have been found and the
+	 *         module list in the sheet needs to be extended.
 	 */
 	public boolean findComplementaryModules(Map<String, String> modulesChanged,
 			Map<String, String> modules1, Map<String, String> modules2) {
@@ -270,6 +278,10 @@ public class ProcessXLS {
 		return complModulesFound;
 	}
 
+	/**
+	 * Extends the available list of modules in the sheet and sets the styles.
+	 * @throws IOException Signals that no data could be written out.
+	 */
 	public void writeComplementaryModules() throws IOException {
 		try {
 			Sheet sheet = wb.getSheetAt(1);
