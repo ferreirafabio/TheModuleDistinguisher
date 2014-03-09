@@ -52,6 +52,11 @@ public class ProcessXLS {
 		readExcelWorkbook();
 	}
 
+	/**
+	 * FileInputStream is used to create a workbook. The next free coordinates
+	 * (row, column)for writing are determined and it will be checked for the
+	 * sheets' existing modules.
+	 */
 	public void readExcelWorkbook() {
 		try {
 			inp = new FileInputStream(filepath);
@@ -70,6 +75,13 @@ public class ProcessXLS {
 
 	}
 
+	/**
+	 * FileOutputStream is created to write out data.
+	 * 
+	 * @throws IOException
+	 *             Either no FileOutputStream could be created or no data could
+	 *             be written out.
+	 */
 	public void writeExcelWorkBook() throws IOException {
 		try {
 			out = new FileOutputStream(this.filepath);
@@ -80,6 +92,9 @@ public class ProcessXLS {
 		}
 	}
 
+	/**
+	 * InputStream is closed.
+	 */
 	public void closeInputStream() {
 		if (this.inp != null) {
 			try {
@@ -91,6 +106,9 @@ public class ProcessXLS {
 		}
 	}
 
+	/**
+	 * OutputStream is closed.
+	 */
 	public void closeOutputStream() {
 		if (this.out != null) {
 			try {
@@ -118,6 +136,16 @@ public class ProcessXLS {
 		return this.nextFreeRow;
 	}
 
+	/**
+	 * Determines the next free cell of a given column, available to write out
+	 * data. Settings are currently set to RETURN_NULL_AND_BLANK (blank and null
+	 * cells will be viewed as written cells).
+	 * 
+	 * @param SheetIndex
+	 *            Number of sheet (zero based).
+	 * @param colNum
+	 *            Column to which the row count will be calculated.
+	 */
 	public void setNextFreeRow(int SheetIndex, int colNum) {
 		Sheet sheet = null;
 		int rowCount = 0;
@@ -137,6 +165,14 @@ public class ProcessXLS {
 		this.nextFreeRow = rowCount;
 	}
 
+	/**
+	 * Determines the next free row of a given row, available to write out data.
+	 * Settings are currently set to CREATE_NULL_AS_BLANK (blank cell is created
+	 * for missing cell; each not null cell will be counted).
+	 * 
+	 * @param SheetIndex
+	 * @param rowNum
+	 */
 	public void setNextFreeColumn(int SheetIndex, int rowNum) {
 
 		Sheet sheet = null;
@@ -192,6 +228,10 @@ public class ProcessXLS {
 		return -1;
 	}
 
+	/**
+	 * Determination of existing modules in column 1 of sheet 1. The algorithms
+	 * demands the modules to be listed in a consecutive arrangement.
+	 */
 	public void findExistingModules() {
 
 		Sheet sheet = wb.getSheetAt(1); // Sheet 1
@@ -208,6 +248,13 @@ public class ProcessXLS {
 		}
 	}
 
+	/**
+	 * 
+	 * @param modulesChanged
+	 * @param modules1
+	 * @param modules2
+	 * @return
+	 */
 	public boolean findComplementaryModules(Map<String, String> modulesChanged,
 			Map<String, String> modules1, Map<String, String> modules2) {
 		boolean complModulesFound = false;
