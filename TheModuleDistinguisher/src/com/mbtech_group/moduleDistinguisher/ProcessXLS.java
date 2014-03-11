@@ -1,35 +1,28 @@
 package com.mbtech_group.moduleDistinguisher;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
-
-import org.apache.poi.hssf.record.CFRuleRecord.ComparisonOperator;
-import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.formula.functions.Column;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.ConditionalFormattingRule;
 import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.FontFormatting;
 import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.usermodel.PatternFormatting;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.SheetConditionalFormatting;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.apache.poi.ss.util.CellRangeAddress;
+
+/**
+ * 
+ * @author Fabio
+ *
+ */
 
 public class ProcessXLS {
 
@@ -171,7 +164,9 @@ public class ProcessXLS {
 	 * for missing cell; each not null cell will be counted).
 	 * 
 	 * @param SheetIndex
+	 *            Number of sheet (zero based).
 	 * @param rowNum
+	 *            Row to which the column count will be calculated.
 	 */
 	public void setNextFreeColumn(int SheetIndex, int rowNum) {
 
@@ -280,7 +275,9 @@ public class ProcessXLS {
 
 	/**
 	 * Extends the available list of modules in the sheet and sets the styles.
-	 * @throws IOException Signals that no data could be written out.
+	 * 
+	 * @throws IOException
+	 *             Signals that no data could be written out.
 	 */
 	public void writeComplementaryModules() throws IOException {
 		try {
@@ -306,6 +303,24 @@ public class ProcessXLS {
 
 	}
 
+	/**
+	 * After the changes have been determined, the data is written out to the
+	 * sheet. The top consisting of meta data will state basis and sonderstand.
+	 * For each module that has experienced a change the (updated) version
+	 * number is written out to the correct column and row, which will in turn
+	 * be highlighted, indicating the change.
+	 * 
+	 * @param SheetIndex
+	 *            Number of sheet (zero based).
+	 * @param basis
+	 *            The basis string.
+	 * @param sonderstand
+	 *            The sonderstand string.
+	 * @param modulesChanged
+	 *            All the modules which have experienced changes.
+	 * @throws IOException
+	 *             Signals that no data could be written out.
+	 */
 	public void writeData(int SheetIndex, String basis, String sonderstand,
 			Map<String, String> modulesChanged) throws IOException {
 		try {
@@ -353,6 +368,14 @@ public class ProcessXLS {
 		}
 	}
 
+	/**
+	 * Returns a defined CellStyle type for a specific type of cell.
+	 * 
+	 * @param type
+	 *            0:normal, 1: marked, 2: head
+	 * @return A CellStyle defining font type, font height, bold(yes/no),
+	 *         alignment and borders
+	 */
 	public CellStyle getStyle(int type) {
 		Font font = wb.createFont();
 		CellStyle style = wb.createCellStyle();
@@ -407,38 +430,4 @@ public class ProcessXLS {
 		return style;
 	}
 
-	public CellStyle setColumnStyle() {
-		Sheet sheet = wb.getSheetAt(1);
-
-		Font font = wb.createFont();
-		font.setFontHeightInPoints((short) 10);
-		font.setFontName("Arial");
-		font.setBoldweight(Font.BOLDWEIGHT_BOLD);
-
-		CellStyle colStyle = wb.createCellStyle();
-		colStyle.setFont(font);
-		colStyle.setBorderLeft(HSSFCellStyle.BORDER_MEDIUM);
-		colStyle.setBorderRight(HSSFCellStyle.BORDER_MEDIUM);
-		colStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-
-		sheet.setDefaultColumnStyle(nextFreeColumn, colStyle);
-
-		return colStyle;
-	}
-
-	public CellStyle getCellStyle(CellStyle colStyle) {
-		CellStyle cellStyle = wb.createCellStyle();
-		cellStyle.cloneStyleFrom(colStyle);
-
-		Font font = wb.createFont();
-		font.setFontHeightInPoints((short) 10);
-		font.setFontName("Arial");
-		font.setBoldweight(Font.BOLDWEIGHT_BOLD);
-		font.setColor(IndexedColors.BLACK.getIndex());
-
-		cellStyle.setFillForegroundColor(IndexedColors.ORANGE.getIndex());
-		cellStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-		cellStyle.setFont(font);
-		return cellStyle;
-	}
 }
