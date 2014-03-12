@@ -3,10 +3,6 @@ package com.mbtech_group.moduleDistinguisher;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JTable;
-
-import java.awt.BorderLayout;
-
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -14,16 +10,7 @@ import javax.swing.JTextField;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.UIManager;
-import javax.swing.plaf.metal.MetalIconFactory;
-
-import java.awt.Panel;
-
-import javax.swing.JPanel;
-
-import java.awt.Button;
 import java.awt.Component;
-import java.awt.Label;
-
 import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
@@ -35,12 +22,7 @@ import java.io.IOException;
 
 import javax.swing.ImageIcon;
 
-import java.awt.TextArea;
-
 import javax.swing.JTextArea;
-import javax.swing.border.TitledBorder;
-
-import java.awt.FlowLayout;
 import java.awt.Font;
 
 public class DiffModuleChangesGUI {
@@ -57,9 +39,6 @@ public class DiffModuleChangesGUI {
 	private static String xlsPath = null;
 	private static String basisPath = null;
 	private static String sonderstandPath = null;
-	// JScrollPane scrollPane = new JScrollPane(textArea,
-	// JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-	// JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
 	/**
 	 * @wbp.nonvisual location=604,39

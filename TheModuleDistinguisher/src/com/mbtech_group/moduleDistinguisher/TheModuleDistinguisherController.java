@@ -1,13 +1,17 @@
 package com.mbtech_group.moduleDistinguisher;
 
 import java.io.IOException;
-import java.util.HashMap;
 
+/**
+ * 
+ * @author Fabio
+ *
+ */
 public class TheModuleDistinguisherController {
 
-	private static String basisPath = "C:\\ferrefa\\Werkstudent_3250\\trunk\\2_Arbeitspakete\\2002\\Daten\\OM654 13b VC03_L0_V0_Doku.txt";
-	private static String sonderstandPath = "C:\\ferrefa\\Werkstudent_3250\\trunk\\2_Arbeitspakete\\2002\\Daten\\OM654 13a VC02_L3_V0_2025_Doku.txt";
-	private static String xlsPath = "C:\\ferrefa\\Werkstudent_3250\\trunk\\2_Arbeitspakete\\2002\\Daten\\Versionsaenderungen_Teststaende.xls";
+	private static String basisPath;
+	private static String sonderstandPath;
+	private static String xlsPath;
 	private String log = null;
 
 	// public static void main(String[] args) {
@@ -36,16 +40,16 @@ public class TheModuleDistinguisherController {
 	//
 	// }
 
-	public TheModuleDistinguisherController(String basisPath,
-			String sonderstandPath, String xlsPath) throws IOException {
+	public TheModuleDistinguisherController(String bPath,
+			String sPath, String xPath) throws IOException {
 
-		TheModuleDistinguisherController.basisPath = basisPath;
-		TheModuleDistinguisherController.sonderstandPath = sonderstandPath;
-		TheModuleDistinguisherController.xlsPath = xlsPath;
+		basisPath = bPath;
+		sonderstandPath = sPath;
+		xlsPath = xPath;
 
-		DiffModuleChanges diff = new DiffModuleChanges(basisPath,
-				sonderstandPath);
-		ProcessXLS xls = new ProcessXLS(xlsPath);
+		DiffModuleChanges diff = new DiffModuleChanges(bPath,
+				sPath);
+		ProcessXLS xls = new ProcessXLS(xPath);
 
 		try {
 			log = "Module parameters\nModules with changes: "
