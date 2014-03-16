@@ -47,9 +47,9 @@ public class TheModuleDistinguisherController {
 		sonderstandPath = sPath;
 		xlsPath = xPath;
 
-		DiffModuleChanges diff = new DiffModuleChanges(bPath,
-				sPath);
-		ProcessXLS xls = new ProcessXLS(xPath);
+		DiffModuleChanges diff = new DiffModuleChanges(basisPath,
+				sonderstandPath);
+		ProcessXLS xls = new ProcessXLS(xlsPath);
 
 		try {
 			log = "Module parameters\nModules with changes: "

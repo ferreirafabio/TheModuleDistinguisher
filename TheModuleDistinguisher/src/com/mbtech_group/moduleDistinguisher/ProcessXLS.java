@@ -36,10 +36,6 @@ public class ProcessXLS {
 	private int nextFreeColumn;
 	private int nextFreeRow;
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-	}
-
 	public ProcessXLS(String filePath) {
 		this.filepath = filePath;
 		readExcelWorkbook();

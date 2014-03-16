@@ -25,7 +25,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JTextArea;
 import java.awt.Font;
 
-public class DiffModuleChangesGUI {
+public class TheModuleDistinguisherGUI {
 
 	private JFrame frmThemoduledistinguisher;
 	private JTextField xlsPathPanel;
@@ -64,7 +64,7 @@ public class DiffModuleChangesGUI {
 				try {
 					UIManager
 							.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-					DiffModuleChangesGUI window = new DiffModuleChangesGUI();
+					TheModuleDistinguisherGUI window = new TheModuleDistinguisherGUI();
 					window.frmThemoduledistinguisher.setVisible(true);
 
 				} catch (Exception e) {
@@ -77,7 +77,7 @@ public class DiffModuleChangesGUI {
 	/**
 	 * Create the application.
 	 */
-	public DiffModuleChangesGUI() {
+	public TheModuleDistinguisherGUI() {
 		initialize();
 	}
 
@@ -104,7 +104,7 @@ public class DiffModuleChangesGUI {
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
 					try {
-						DiffModuleChangesGUI.xlsPath = file.toString();
+						TheModuleDistinguisherGUI.xlsPath = file.toString();
 						if (!(xlsPath.contains(".xls"))) {
 							JOptionPane.showMessageDialog(
 									(Component) e.getSource(), "No .xls file.",
@@ -121,7 +121,7 @@ public class DiffModuleChangesGUI {
 		});
 		xlsPathBtn
 				.setSelectedIcon(new ImageIcon(
-						DiffModuleChangesGUI.class
+						TheModuleDistinguisherGUI.class
 								.getResource("/com/sun/java/swing/plaf/windows/icons/Directory.gif")));
 
 		lblSelectBasis = new JLabel("Select basis export");
@@ -164,7 +164,7 @@ public class DiffModuleChangesGUI {
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
 					try {
-						DiffModuleChangesGUI.basisPath = file.toString();
+						TheModuleDistinguisherGUI.basisPath = file.toString();
 						if (!(basisPath.contains(".txt"))) {
 							JOptionPane.showMessageDialog(
 									(Component) e.getSource(), "No .txt file.",
@@ -188,7 +188,7 @@ public class DiffModuleChangesGUI {
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
 					try {
-						DiffModuleChangesGUI.sonderstandPath = file.toString();
+						TheModuleDistinguisherGUI.sonderstandPath = file.toString();
 						if (!(sonderstandPath.contains(".txt"))) {
 							JOptionPane.showMessageDialog(
 									(Component) e.getSource(), "No .txt file.",
