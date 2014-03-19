@@ -14,7 +14,7 @@ import java.util.regex.*;
 /**
  * 
  * @author Fabio
- *
+ * 
  */
 public class DiffModuleChanges {
 
@@ -80,31 +80,32 @@ public class DiffModuleChanges {
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new FileReader(path));
+			try {
+				StringBuilder sb = new StringBuilder();
+				String line = br.readLine();
+
+				while (line != null) {
+					sb.append(line);
+					sb.append('\n');
+					line = br.readLine();
+				}
+				fileContent = sb.toString();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				try {
+					br.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		try {
-			StringBuilder sb = new StringBuilder();
-			String line = br.readLine();
 
-			while (line != null) {
-				sb.append(line);
-				sb.append('\n');
-				line = br.readLine();
-			}
-			fileContent = sb.toString();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			try {
-				br.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 		return fileContent;
 	}
 
