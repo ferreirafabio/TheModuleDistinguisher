@@ -25,7 +25,6 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
  */
 
 public class ProcessXLS {
-
 	private static final int MY_MINIMUM_COLUMN_COUNT = 0;
 	private InputStream inp;
 	private OutputStream out;
